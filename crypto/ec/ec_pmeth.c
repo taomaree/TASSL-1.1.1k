@@ -344,6 +344,14 @@ static int pkey_ec_ctrl(EVP_PKEY_CTX *ctx, int type, int p1, void *p2)
     case EVP_PKEY_CTRL_PKCS7_SIGN:
     case EVP_PKEY_CTRL_CMS_SIGN:
         return 1;
+            
+#ifndef OPENSSL_NO_SM2
+    case EVP_PKEY_CTRL_PKCS7_ENCRYPT:
+    case EVP_PKEY_CTRL_PKCS7_DECRYPT:
+    case EVP_PKEY_CTRL_CMS_DECRYPT:
+    case EVP_PKEY_CTRL_CMS_ENCRYPT:
+        return 1;
+#endif
 
     default:
         return -2;
