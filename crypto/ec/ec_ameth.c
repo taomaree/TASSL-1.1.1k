@@ -504,17 +504,18 @@ static int ec_pkey_ctrl(EVP_PKEY *pkey, int op, long arg1, void *arg2)
                 return -1;
             if (!OBJ_find_sigid_by_algs(&snid, hnid, EVP_PKEY_id(pkey)))
                 return -1;
-            /*ÎªÁËÄÜ¹»Æ´´Õ³öpkcs7ÖĞµÄ¸ñÊ½µÄoid£¬ÆäÖĞsm3withSM2Sign Îª nid 988£¬oid 1 2 156 10197 1 501£¬ÕâÊÇ´ÓpkeyÖĞÕÒµ½µÄ£¬
-            µ«ÊÇ¹¤ĞĞÖĞµÄ¹úÃÜpkcs7 È´Îªnid 978£¬oid 1 2 156 10197 1 301 1£¬OBJ_sm2signatureÕâÁ©²»ÖªµÀÓĞÉ¶Çø±ğ£¬
-            µ«ÊÇÎªÁËÊÊÅäÕâ¸öµØ·½¸ÄÎªoid=978
-            TODO£ºĞèÒªÆÀ¹ÀÓĞÃ»ÓĞÆäËûÓ°Ïì£¬Ä¿Ç°¸Ğ¾õÓ¦¸ÃÃ»Ê²Ã´Ó°Ïì£¬Ö»»áÓ°Ïì¹úÃÜ²¿·Ö
+            /*ä¸ºäº†èƒ½å¤Ÿæ‹¼å‡‘å‡ºpkcs7ä¸­çš„æ ¼å¼çš„oidï¼Œå…¶ä¸­sm3withSM2Sign ä¸º nid 988ï¼Œoid 1 2 156 10197 1 501ï¼Œè¿™æ˜¯ä»pkeyä¸­æ‰¾åˆ°çš„ï¼Œ
+            ä½†æ˜¯å·¥è¡Œä¸­çš„å›½å¯†pkcs7 å´ä¸ºnid 978ï¼Œoid 1 2 156 10197 1 301 1ï¼ŒOBJ_sm2signatureè¿™ä¿©ä¸çŸ¥é“æœ‰å•¥åŒºåˆ«ï¼Œ
+            ä½†æ˜¯ä¸ºäº†é€‚é…è¿™ä¸ªåœ°æ–¹æ”¹ä¸ºoid=978
+            TODOï¼šéœ€è¦è¯„ä¼°æœ‰æ²¡æœ‰å…¶ä»–å½±å“ï¼Œç›®å‰æ„Ÿè§‰åº”è¯¥æ²¡ä»€ä¹ˆå½±å“ï¼Œåªä¼šå½±å“å›½å¯†éƒ¨åˆ†
             */
             //Modified by mxl,20201209
             if(snid == NID_sm3WithSM2Sign){
             	snid = NID_sm2signature;
             }
             
-            X509_ALGOR_set0(alg2, OBJ_nid2obj(snid), V_ASN1_UNDEF, 0);
+            // X509_ALGOR_set0(alg2, OBJ_nid2obj(snid), V_ASN1_UNDEF, 0);
+            X509_ALGOR_set0(alg, OBJ_nid2obj(NID_sm2encrypt_with_sm3), V_ASN1_NULL, 0);
         }
         return 1;
 #ifndef OPENSSL_NO_CMS
